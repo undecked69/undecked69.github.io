@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRO Quality Inspector | Agricultural Quality Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c5f2d;
+            --secondary-color: #004e89;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 90%;
+            z-index: 1000;
+        }
+
+        .lang-switcher button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: 1px solid var(--primary-color);
+            border-radius: 3px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 150px 5% 60px;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
+                        url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            text-align: center;
+        }
+
+        .services {
+            padding: 60px 5%;
+            background: white;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.3s;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .lang-switcher {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h2 style="color: var(--primary-color); margin:0;">AGRO Quality Inspector</h2>
+        <div class="lang-switcher">
+            <button onclick="changeLanguage('hu')">HU</button>
+            <button onclick="changeLanguage('en')">EN</button>
+            <button onclick="changeLanguage('sr')">SR</button>
+            <button onclick="changeLanguage('de')">DE</button>
+        </div>
+    </nav>
+
+    <section class="hero" data-translate="hero">
+        <h1 data-translate="heroTitle"></h1>
+        <p data-translate="heroSub"></p>
+    </section>
+
+    <section class="services">
+        <div class="service-card" data-translate="service1">
+            <i class="fas fa-seedling icon"></i>
+            <h3 data-translate="service1Title"></h3>
+            <p data-translate="service1Content"></p>
+        </div>
+
+        <div class="service-card" data-translate="service2">
+            <i class="fas fa-truck-moving icon"></i>
+            <h3 data-translate="service2Title"></h3>
+            <p data-translate="service2Content"></p>
+        </div>
+
+        <div class="service-card" data-translate="service3">
+            <i class="fas fa-flask icon"></i>
+            <h3 data-translate="service3Title"></h3>
+            <p data-translate="service3Content"></p>
+        </div>
+    </section>
+
+    <script>
+        const translations = {
+            hu: {
+                heroTitle: "Mezőgazdasági Minőségellenőrzés Szakértői Szolgáltatás",
+                heroSub: "24 órán belüli laborvizsgálat • Nemzetközi akkreditációk",
+                service1Title: "Növényi Termékek Ellenőrzése",
+                service1Content: "- Gabonák (búza, kukorica, árpa)\n- Olajos magvak\n- Műtrágyák minősítése",
+                service2Title: "Rakomány Felügyelet",
+                service2Content: "- Kamion/vagon ellenőrzés\n- Rakomány stabilizálás\n- Dokumentáció ellenőrzés",
+                service3Title: "Laboratóriumi Szolgáltatások",
+                service3Content: "- Nedvesség- és tisztasági vizsgálat\n- Gyors mintaszállítás\n- ISO/IEC 17025 kompatibilis"
+            },
+            en: {
+                heroTitle: "Professional Agricultural Quality Control",
+                heroSub: "24-hour lab analysis • International accreditations",
+                service1Title: "Crop Product Inspection",
+                service1Content: "- Cereals (wheat, corn, barley)\n- Oil seeds\n- Fertilizer certification",
+                service2Title: "Loading Supervision",
+                service2Content: "- Truck/wagon inspection\n- Cargo stabilization\n- Documentation validation",
+                service3Title: "Laboratory Services",
+                service3Content: "- Moisture & purity testing\n- Express sample delivery\n- ISO/IEC 17025 compliant"
+            },
+            sr: {
+                heroTitle: "Стручни услуга за контрол квалитета у пољопривреди",
+                heroSub: "Лабораторијске анализе за 24 сата • Међународне акредитације",
+                service1Title: "Контрола биљних производа",
+                service1Content: "- Житарице (пшеница, кукуруз, јечам)\n- Уљане семенке\n- Сертификација ђубрива",
+                service2Title: "Надзор товарења",
+                service2Content: "- Провера камиона/вагона\n- Стабилизација терета\n- Валидација докумената",
+                service3Title: "Лабораторијске услуге",
+                service3Content: "- Испитивање влажности и чистоће\n- Хитна доставa узорака\n- Усклађено са ISO/IEC 17025"
+            },
+            de: {
+                heroTitle: "Professionelle landwirtschaftliche Qualitätskontrolle",
+                heroSub: "24-Stunden-Labortests • Internationale Akkreditierungen",
+                service1Title: "Pflanzliche Produktinspektion",
+                service1Content: "- Getreide (Weizen, Mais, Gerste)\n- Ölsaaten\n- Düngemittelzertifizierung",
+                service2Title: "Ladeüberwachung",
+                service2Content: "- LKW/Wagen-Inspektion\n- Ladungssicherung\n- Dokumentenvalidierung",
+                service3Title: "Labordienstleistungen",
+                service3Content: "- Feuchtigkeits- & Reinheitstests\n- Express-Probenlieferung\n- ISO/IEC 17025 konform"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key].replace(/\n/g, '<br>');
+                    }
+                }
+            });
+        }
+
+        // Alapértelmezett nyelv
+        changeLanguage('hu');
+    </script>
+</body>
+</html>
