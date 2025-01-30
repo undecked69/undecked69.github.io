@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOQ Számoló</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>EOQ Számoló</h1>
+
+        <label for="demand">Éves kereslet (D):</label>
+        <input type="number" id="demand" placeholder="Pl. 1000">
+
+        <label for="orderCost">Rendelési költség (S):</label>
+        <input type="number" id="orderCost" placeholder="Pl. 50">
+
+        <label for="holdingCost">Tárolási költség / egység / év (H):</label>
+        <input type="number" id="holdingCost" placeholder="Pl. 2">
+
+        <label for="unitPrice">Termék egységára (P):</label>
+        <input type="number" id="unitPrice" placeholder="Pl. 20">
+
+        <label for="leadTime">Ellátási idő (napokban, L):</label>
+        <input type="number" id="leadTime" placeholder="Pl. 10">
+
+        <button onclick="calculateEOQ()">Számítás</button>
+
+        <h2>Eredmények</h2>
+        <p id="result">EOQ: -</p>
+        <p id="totalCost">Teljes készletköltség: -</p>
+        <p id="reorderPoint">Újrarendelési pont: -</p>
+
+        <canvas id="eoqChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
