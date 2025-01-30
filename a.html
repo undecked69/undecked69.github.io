@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRO Munka Napló</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <style>
+        /* ... (előző stílusok maradnak) ... */
+
+        .calculator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        .calculator h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (korábbi HTML marad) ... -->
+
+    <div class="calculator">
+        <h3><i class="fas fa-calculator"></i> Bérszámoló</h3>
+        <p>Összes óra: <span id="totalHours">0</span></p>
+        <p>Összes km: <span id="totalKm">0</span></p>
+        <p><strong>Teljes díjazás:</strong> <span id="totalPayment">0 Ft</span></p>
+    </div>
+
+    <script>
+        // ... (Firebase konfiguráció marad) ...
+
+        const rates = {
+            'SGS': { hour: 1300, km: 70 },
+            'Bureau Veritas': { hour: 1500, km: 90 },
+            'AmSpec': { fixed: 30000 },
+            'Control Union': { fixed: 20000 }
+        };
+
+        async function loadEntries() {
+            const querySnapshot = await db.collection('workEntries')
+                .orderBy('timestamp', 'desc')
+                .get();
+
+            let html = '';
+            let totalPayment = 0;
+            let totalHours = 0;
+            let totalKm = 0;
+
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                const payment = calculatePayment(data);
+                
+                totalPayment += payment;
+                totalHours += data.hours;
+                totalKm += data.kilometers;
+
+                html += `
+                    <div class="work-item">
+                        <p><strong>${data.company}</strong> • ${data.location}</p>
+                        <p>Óra: ${data.hours} óra • KM: ${data.kilometers} km</p>
+                        <p>Díj: ${payment.toLocaleString()} Ft</p>
+                        <small>${data.timestamp?.toDate().toLocaleDateString()}</small>
+                    </div>
+                `;
+            });
+
+            document.getElementById('workEntries').innerHTML = html;
+            updateCalculator(totalHours, totalKm, totalPayment);
+        }
+
+        function calculatePayment(entry) {
+            const rate = rates[entry.company];
+            if (!rate) return 0;
+
+            if (rate.fixed) {
+                return rate.fixed;
+            } else {
+                return (entry.hours * rate.hour) + (entry.kilometers * rate.km);
+            }
+        }
+
+        function updateCalculator(hours, km, payment) {
+            document.getElementById('totalHours').textContent = hours.toFixed(1);
+            document.getElementById('totalKm').textContent = km;
+            document.getElementById('totalPayment').textContent = 
+                `${payment.toLocaleString()} Ft`;
+        }
+
+        // ... (mentési logika marad) ...
+    </script>
+</body>
+</html>
